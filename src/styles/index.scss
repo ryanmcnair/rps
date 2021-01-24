@@ -5,3 +5,25 @@
 body {
   background-color: lightblue;
 }
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.play-buttons {
+  margin-right: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 80px;
+}
+
+.paper-button {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.scores {
+  display: flex;
+  justify-content: space-evenly;
+}
