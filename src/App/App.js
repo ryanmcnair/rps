@@ -62,7 +62,7 @@ class App extends React.Component {
 
   functionCallback = () => {
     this.randomObject();
-    setInterval(() => {
+    setTimeout(() => {
       this.gamePlay();
     }, 100);
   }
