@@ -1,4 +1,4 @@
-const weapons = ['rock', 'paper', 'scissors'];
+const weapons = ['ROCK', 'PAPER', 'SCISSORS'];
 
 const objects = [
   {
