@@ -31,6 +31,16 @@ class App extends React.Component {
     });
   };
 
+  resetScores = () => {
+    this.setState({
+      playerScore: 0,
+      opponentScore: 0,
+      player: '',
+      opponent: '',
+      winner: '',
+    });
+  }
+
   gamePlay = () => {
     const { player, opponent } = this.state;
 
@@ -72,7 +82,15 @@ class App extends React.Component {
       <div className='App'>
         <h2>Rock Paper Scissors </h2>
         <div className='buttons'>
-          <div className='play-buttons'>
+          <div className='reset-button'>
+            <button
+              className='btn btn-warning'
+              onClick={() => this.resetScores()}
+            >
+              Reset
+            </button>
+            </div>
+          <div className='choice-buttons'>
             <button
               className='btn btn-danger'
               onClick={() => this.selectObject('ROCK')}
@@ -92,7 +110,7 @@ class App extends React.Component {
               ✌
             </button>
           </div>
-          <div className='random-button'>
+          <div className='play-button'>
             <button
               className='btn btn-success'
               onClick={() => this.functionCallback()}
