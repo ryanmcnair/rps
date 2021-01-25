@@ -6,19 +6,22 @@ import Opponent from '../components/Opponent';
 import Scorecard from '../components/Scorecard';
 
 class App extends React.Component {
-  state ={
+  state = {
     player: '',
     opponent: '',
     playerScore: 0,
     opponentScore: 0,
+    winner: '',
     key: 1,
     key2: 2,
     key3: 3,
-  }
+  };
 
   selectObject = (choice) => {
     this.setState({
       player: choice,
+      winner: '',
+      opponent: '',
     });
   };
 
@@ -26,6 +29,42 @@ class App extends React.Component {
     this.setState({
       opponent: item.weapons[Math.floor(Math.random() * item.weapons.length)],
     });
+  };
+
+  gamePlay = () => {
+    const { player, opponent } = this.state;
+
+    if (player === '' || opponent === '') {
+      // eslint-disable-next-line no-console
+      console.log('Thanks for playing');
+    } else if (player === opponent) {
+      this.setState({ winner: 'Tie game' });
+    } else if (
+      (player === 'ROCK' && opponent === 'SCISSORS')
+      || (player === 'SCISSORS' && opponent === 'PAPER')
+      || (player === 'PAPER' && opponent === 'ROCK')
+    ) {
+      this.setState({ winner: 'You win' });
+      this.setState((prevState) => ({
+        playerScore: prevState.playerScore + 1,
+      }));
+    } else if (
+      (opponent === 'ROCK' && player === 'SCISSORS')
+      || (opponent === 'SCISSORS' && player === 'PAPER')
+      || (opponent === 'PAPER' && player === 'ROCK')
+    ) {
+      this.setState({ winner: 'Opponent wins' });
+      this.setState((prevState) => ({
+        opponentScore: prevState.opponentScore + 1,
+      }));
+    }
+  };
+
+  functionCallback = () => {
+    this.randomObject();
+    setInterval(() => {
+      this.gamePlay();
+    }, 100);
   }
 
   render() {
@@ -36,19 +75,19 @@ class App extends React.Component {
           <div className='play-buttons'>
             <button
               className='btn btn-danger'
-              onClick={() => this.selectObject('rock')}
+              onClick={() => this.selectObject('ROCK')}
             >
               ✊
             </button>
             <button
               className='btn btn-danger paper-button'
-              onClick={() => this.selectObject('paper')}
+              onClick={() => this.selectObject('PAPER')}
             >
               ✋
             </button>
             <button
               className='btn btn-danger'
-              onClick={() => this.selectObject('scissors')}
+              onClick={() => this.selectObject('SCISSORS')}
             >
               ✌
             </button>
@@ -56,7 +95,7 @@ class App extends React.Component {
           <div className='random-button'>
             <button
               className='btn btn-success'
-              onClick={() => this.randomObject()}
+              onClick={() => this.functionCallback()}
             >
               Play
             </button>
@@ -67,11 +106,11 @@ class App extends React.Component {
           playerScore={this.state.playerScore}
           opponentScore={this.state.opponentScore}
         />
-        <Player key={this.state.key} playerChoice={this.state.player} />
-        <Opponent
-          key={this.state.key2}
-          opponentChoice={this.state.opponent}
-        />
+        <div className='board'>
+          <Player key={this.state.key} player={this.state.player} />
+          <Opponent key={this.state.key2} opponent={this.state.opponent} />
+        </div>
+        <div className='results'>{this.state.winner}</div>
       </div>
     );
   }
